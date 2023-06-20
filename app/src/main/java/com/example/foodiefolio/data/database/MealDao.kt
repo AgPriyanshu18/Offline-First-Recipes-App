@@ -20,7 +20,7 @@ interface MealDao {
     suspend fun deleteAllCategories()
 
 
-    @Query("SELECT * FROM categories WHERE id = :id")
+    @Query("SELECT * FROM mealDetails WHERE id = :id")
     fun getMealDetails(id: Int): Flow<MealDetails>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -30,10 +30,10 @@ interface MealDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllMeal(meals: List<Meals>)
 
-    @Query("SELECT * FROM Meals")
+    @Query("SELECT * FROM meals")
     fun getMeal(): Flow<List<Meals>>
 
-    @Query("DELETE FROM categories")
-    suspend fun deleteAllMeals(): Resource<Unit>
+    @Query("DELETE FROM meals")
+    suspend fun deleteAllMeals()
 
 }

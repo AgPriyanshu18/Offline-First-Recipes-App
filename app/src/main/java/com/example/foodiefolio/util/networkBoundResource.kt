@@ -15,9 +15,9 @@ inline fun <ResultType, RequestType> networkBoundResource(
     // responsible for taking data from fetch and saving it to database
     crossinline saveFetchResult: suspend (RequestType) -> Unit,
     // responsible for deciding whether to fetch new data from rest api
-    crossinline shouldFetch: (ResultType) -> Boolean = { true },
-    // responsible for handling error when fetching data from rest api
-    crossinline onFetchFailed: (Throwable) -> Unit = { Timber.e(it) }
+    crossinline shouldFetch: (ResultType) -> Boolean = { true }
+//    // responsible for handling error when fetching data from rest api
+//    crossinline onFetchFailed: (Throwable) -> Unit = { Timber.e(it) }
 ) = flow {
 
     // get one list of product from database
@@ -40,7 +40,7 @@ inline fun <ResultType, RequestType> networkBoundResource(
                 query().map { Resource.Success(it) }
             } catch (t: Throwable) {
                 // handle error
-                onFetchFailed(t)
+//                onFetchFailed(t)
                 // error and cache data
                 query().map { Resource.Error(t, it) }
             }

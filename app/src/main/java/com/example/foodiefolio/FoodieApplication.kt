@@ -1,4 +1,8 @@
 package com.example.foodiefolio
 
-class FoodieApplication {
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+
+@HiltAndroidApp
+class FoodieApplication : Application(){
 }

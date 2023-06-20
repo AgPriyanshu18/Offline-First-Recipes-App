@@ -7,7 +7,7 @@ import com.example.foodiefolio.data.model.Category
 import com.example.foodiefolio.data.model.MealDetails
 import com.example.foodiefolio.data.model.Meals
 
-@Database(entities = [Meals::class, Category::class,MealDetails::class], version = 1)
+@Database(entities = [Meals::class, Category::class,MealDetails::class], version = 1, exportSchema = false)
 abstract class MealDatabase : RoomDatabase(){
     abstract fun mealDao() : MealDao
 }
