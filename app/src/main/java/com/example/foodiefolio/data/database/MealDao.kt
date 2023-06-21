@@ -13,27 +13,21 @@ interface MealDao {
     @Query("SELECT * FROM categories")
     fun getCategories(): Flow<List<Category>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAllCategories(categories: List<Category>)
-
-    @Query("DELETE FROM categories")
-    suspend fun deleteAllCategories()
 
 
     @Query("SELECT * FROM mealDetails WHERE id = :id")
     fun getMealDetails(id: Int): Flow<MealDetails>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMealDetails(meal: MealDetails)
 
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAllMeal(meals: List<Meals>)
 
-    @Query("SELECT * FROM meals")
-    fun getMeal(): Flow<List<Meals>>
-
-    @Query("DELETE FROM meals")
-    suspend fun deleteAllMeals()
+    @Query("SELECT * FROM meals WHERE category = :cat")
+    fun getMeal(cat : String): Flow<List<Meals>>
 
 }

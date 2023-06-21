@@ -11,6 +11,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -20,14 +22,26 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ApplicationModule {
 
+
     @Singleton
     @Provides
     fun provideMealAPI(): FoodieAPI =
         Retrofit.Builder()
             .baseUrl(FoodieAPI.BASE_URL)
+            .client(provideOkHttpClient())
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build()
             .create(FoodieAPI::class.java)
+
+    private fun provideOkHttpClient() : OkHttpClient{
+        val builder = OkHttpClient()
+            .newBuilder()
+
+        val requestInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        builder.addNetworkInterceptor(requestInterceptor)
+
+        return builder.build()
+    }
 
     @Provides
     fun provideMealRepository(api: FoodieAPI,db:MealDatabase): MealRepository = MealRepositoryImpl(api,db)

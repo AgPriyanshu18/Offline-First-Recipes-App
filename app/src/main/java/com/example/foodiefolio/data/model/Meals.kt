@@ -13,4 +13,6 @@ data class Meals(
     val name : String,
     @SerializedName("strMealThumb")
     val Img : String,
+
+    var category : String
 )

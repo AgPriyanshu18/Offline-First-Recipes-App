@@ -1,5 +1,6 @@
 package com.example.foodiefolio.util
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
@@ -15,14 +16,14 @@ inline fun <ResultType, RequestType> networkBoundResource(
     // responsible for taking data from fetch and saving it to database
     crossinline saveFetchResult: suspend (RequestType) -> Unit,
     // responsible for deciding whether to fetch new data from rest api
-    crossinline shouldFetch: (ResultType) -> Boolean = { true }
+    crossinline shouldFetch: (ResultType) -> Boolean = { true },
 //    // responsible for handling error when fetching data from rest api
-//    crossinline onFetchFailed: (Throwable) -> Unit = { Timber.e(it) }
+    crossinline onFetchFailed: (Throwable) -> Unit = { Timber.e(it) }
 ) = flow {
 
     // get one list of product from database
     val data = query().first()
-
+    Log.e("networkBoundResource","should fetch se bahar + data.toString()")
     //if its time to update cache if data is decent or not
     val flow = if (shouldFetch(data)) {
 
@@ -30,6 +31,8 @@ inline fun <ResultType, RequestType> networkBoundResource(
         emit(Resource.Loading(data))
 
         val fetchedResult = fetch()
+
+        Log.e("networkBoundResource",data.toString())
         // if data is not same as api data
         if (data != fetchedResult) {
             try {
@@ -39,8 +42,10 @@ inline fun <ResultType, RequestType> networkBoundResource(
                 // new data from api
                 query().map { Resource.Success(it) }
             } catch (t: Throwable) {
+
+
                 // handle error
-//                onFetchFailed(t)
+                onFetchFailed(t)
                 // error and cache data
                 query().map { Resource.Error(t, it) }
             }

@@ -21,7 +21,7 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/FoodImage"
+            android:id="@+id/recipe_image"
             android:layout_width="130dp"
             android:layout_height="120dp"
             android:src="@drawable/food"
@@ -33,13 +33,14 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
+            android:id="@+id/recipe_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Anime Food"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/FoodImage"
+            app:layout_constraintStart_toEndOf="@+id/recipe_image"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5" />
     </androidx.constraintlayout.widget.ConstraintLayout>

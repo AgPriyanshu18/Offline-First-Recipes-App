@@ -1,5 +1,6 @@
 package com.example.foodiefolio.data.repository
 
+import android.util.Log
 import androidx.room.withTransaction
 import com.example.foodiefolio.data.api.FoodieAPI
 import com.example.foodiefolio.data.database.MealDatabase
@@ -18,6 +19,7 @@ class MealRepositoryImpl(
 ) : MealRepository{
 
     private val dao = db.mealDao()
+    private val TAG = "mealrepIMPLOL"
 
     override fun getCategories(): Flow<Resource<List<Category>>> = networkBoundResource(
         query = {
@@ -26,7 +28,8 @@ class MealRepositoryImpl(
         fetch = {
             delay(1000)
             try {
-                api.getCategories()
+                val p = api.getCategories()
+                p
             }catch (e  :Exception){
                 e.printStackTrace()
                 null
@@ -35,7 +38,6 @@ class MealRepositoryImpl(
         saveFetchResult = { categories ->
             db.withTransaction {
                 if (categories != null) {
-                    dao.deleteAllCategories()
                     dao.insertAllCategories(categories.categories)
                 }
             }
@@ -59,16 +61,24 @@ class MealRepositoryImpl(
 
     override fun getMeal(cat: String): Flow<Resource<List<Meals>>> = networkBoundResource(
         query = {
-            dao.getMeal()
+            dao.getMeal(cat)
         },
         fetch = {
             delay(1000)
-            api.getMealByCategory(cat)
+            try {
+                api.getMealByCategory(cat)
+            }catch (e : Exception){
+                e.printStackTrace()
+                null
+            }
         },
         saveFetchResult = { meals ->
             db.withTransaction {
-                dao.deleteAllMeals()
-                dao.insertAllMeal(meals)
+                meals?.meals?.forEach {
+                    it.category = cat
+                }
+                Log.d(TAG, "getMeal: ${meals?.meals}")
+                dao.insertAllMeal(meals!!.meals)
             }
         }
     )

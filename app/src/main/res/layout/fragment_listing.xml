@@ -1,14 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.listing.ListingFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.listing.ListingFragment"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="horizontal">
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center_vertical"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="10dp">
+
+            <ImageView
+                android:id="@+id/list_cat_image"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:backgroundTint="@color/black"
+                android:src="@drawable/food"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/list_cat_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Interested in Milk \n Today"
+            android:layout_gravity="center_vertical"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_margin="15dp"
+        tools:listitem="@layout/search_item_layout"/>
 
-</FrameLayout>
+    <ProgressBar
+        android:id="@+id/list_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/error_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Something Went Wrong"
+        android:textSize="25sp"
+        android:visibility="gone"/>
+
+
+
+</LinearLayout>
