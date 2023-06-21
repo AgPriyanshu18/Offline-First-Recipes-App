@@ -20,7 +20,7 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/FoodImage"
+            android:id="@+id/recipe_Image"
             android:layout_width="130dp"
             android:layout_height="120dp"
             android:backgroundTint="@color/black"
@@ -34,6 +34,7 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
+            android:id="@+id/recipe_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Anime Food"

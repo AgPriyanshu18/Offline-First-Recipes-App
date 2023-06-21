@@ -26,7 +26,6 @@
             android:layout_height="120dp"
             android:src="@drawable/food"
             android:layout_marginStart="15dp"
-            android:foreground="@drawable/image_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.061"
             app:layout_constraintStart_toStartOf="parent"

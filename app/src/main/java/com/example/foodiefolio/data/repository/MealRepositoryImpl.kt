@@ -10,6 +10,7 @@ import com.example.foodiefolio.util.Resource
 import com.example.foodiefolio.util.networkBoundResource
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import java.lang.Exception
 
 class MealRepositoryImpl(
     private val api: FoodieAPI,
@@ -24,12 +25,19 @@ class MealRepositoryImpl(
         },
         fetch = {
             delay(1000)
-            api.getCategories()
+            try {
+                api.getCategories()
+            }catch (e  :Exception){
+                e.printStackTrace()
+                null
+            }
         },
         saveFetchResult = { categories ->
             db.withTransaction {
-                dao.deleteAllCategories()
-                dao.insertAllCategories(categories)
+                if (categories != null) {
+                    dao.deleteAllCategories()
+                    dao.insertAllCategories(categories.categories)
+                }
             }
         }
     )

@@ -9,7 +9,20 @@
         android:id="@+id/categoriesFragment"
         android:name="com.example.foodiefolio.ui.categories.CategoriesFragment"
         android:label="fragment_categories"
-        tools:layout="@layout/fragment_categories" />
+        tools:layout="@layout/fragment_categories" >
+        <action
+            android:id="@+id/action_categoriesFragment_to_listingFragment"
+            app:destination="@id/listingFragment" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_favFragment"
+            app:destination="@id/favFragment" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_randomFragment"
+            app:destination="@id/randomFragment" />
+    </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.foodiefolio.ui.details.DetailsFragment"
@@ -24,7 +37,11 @@
         android:id="@+id/listingFragment"
         android:name="com.example.foodiefolio.ui.listing.ListingFragment"
         android:label="fragment_listing"
-        tools:layout="@layout/fragment_listing" />
+        tools:layout="@layout/fragment_listing" >
+        <action
+            android:id="@+id/action_listingFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/randomFragment"
         android:name="com.example.foodiefolio.ui.random.RandomFragment"
