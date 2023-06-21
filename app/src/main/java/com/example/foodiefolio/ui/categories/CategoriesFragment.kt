@@ -34,6 +34,10 @@ class CategoriesFragment : Fragment() {
 
         viewModel.refresh()
 
+        binding.catSearch.setOnClickListener {
+            Navigation.findNavController(requireView()).navigate(R.id.action_categoriesFragment_to_searchFragment)
+        }
+
         return binding.root
     }
 

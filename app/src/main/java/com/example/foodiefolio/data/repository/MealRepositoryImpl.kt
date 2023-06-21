@@ -11,6 +11,7 @@ import com.example.foodiefolio.util.Resource
 import com.example.foodiefolio.util.networkBoundResource
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 
 class MealRepositoryImpl(
@@ -44,9 +45,9 @@ class MealRepositoryImpl(
         }
     )
 
-    override fun getMealDetails(id: Int): Flow<Resource<MealDetails>> = networkBoundResource(
+    override fun getMealDetails(id: String): Flow<Resource<MealDetails>> = networkBoundResource(
         query = {
-            dao.getMealDetails(id)
+            dao.getMealDetails(id.toInt())
         },
         fetch = {
             delay(500)
@@ -54,7 +55,7 @@ class MealRepositoryImpl(
         },
         saveFetchResult = { mealDetails ->
             db.withTransaction {
-                dao.insertMealDetails(mealDetails)
+                dao.insertMealDetails(mealDetails.meals[0])
             }
         }
     )
@@ -82,5 +83,21 @@ class MealRepositoryImpl(
             }
         }
     )
+
+    override fun getSearchResults(query: String): Flow<Resource<List<Meals>>> {
+
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val response = api.getSearch(query)
+                if (response.meals.isNotEmpty()) {
+                    emit(Resource.Success(response.meals))
+                }
+            } catch (e: Exception) {
+                emit(Resource.Error(Throwable(e.message.toString())))
+                e.printStackTrace()
+            }
+        }
+    }
 
 }

@@ -10,8 +10,10 @@ interface MealRepository {
 
     fun getCategories(): Flow<Resource<List<Category>>>
 
-    fun getMealDetails(id: Int): Flow<Resource<MealDetails>>
+    fun getMealDetails(id: String): Flow<Resource<MealDetails>>
 
     fun getMeal(cat : String): Flow<Resource<List<Meals>>>
+
+    fun getSearchResults(query: String) : Flow<Resource<List<Meals>>>
 
 }

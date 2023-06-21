@@ -1,60 +1,95 @@
 package com.example.foodiefolio.ui.search
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodiefolio.R
+import com.example.foodiefolio.data.model.Meals
+import com.example.foodiefolio.databinding.FragmentSearchBinding
+import com.example.foodiefolio.databinding.SearchItemLayoutBinding
+import com.example.foodiefolio.util.AppConstants
+import com.example.foodiefolio.util.Resource
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SearchFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    lateinit var binding: FragmentSearchBinding
+    private val viewModel by viewModels<SearchViewModel>()
+    lateinit var adapter: SearchAdapter
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+    ): View {
+        binding = FragmentSearchBinding.inflate(inflater, container, false)
+
+        setObservers()
+
+        startSearching()
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SearchFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SearchFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    fun startSearching() {
+        binding.searchText.doOnTextChanged { text, start, before, count ->
+            viewModel.getData(text.toString())
+        }
+    }
+
+    private fun setObservers() {
+        binding.apply {
+            viewModel.searchValue.observe(viewLifecycleOwner) { result ->
+                Log.d("SearchFragment", result.toString())
+                when (result) {
+                    is Resource.Success -> {
+                        binding.searchProgressBar.visibility = View.GONE
+                        binding.searchErrorMessage.visibility = View.GONE
+                        Log.d("SearchFragment", result.data.toString())
+                        setUpRecyclerView(result.data!!)
+                    }
+
+                    is Resource.Error -> {
+                        binding.searchProgressBar.visibility = View.GONE
+                        binding.searchErrorMessage.visibility = View.VISIBLE
+                    }
+
+                    is Resource.Loading -> {
+                        binding.searchProgressBar.visibility = View.VISIBLE
+                        binding.searchErrorMessage.visibility = View.GONE
+                    }
+
+                    else -> {}
                 }
             }
+        }
+    }
+
+    private fun setUpRecyclerView(result: List<Meals>) {
+        adapter = SearchAdapter(result, object : SearchAdapter.onClickListener {
+            override fun onClick(meal: Meals) {
+                Toast.makeText(requireContext(), meal.toString(), Toast.LENGTH_SHORT).show()
+                val bundle = Bundle()
+                bundle.putString(AppConstants.MEAL_ID, meal.id)
+                parentFragmentManager.setFragmentResult(AppConstants.MEAL_DATA, bundle)
+                val k = parentFragmentManager.findFragmentById(R.id.fragmentView)
+                Navigation.findNavController(k!!.requireView()).navigate(R.id.action_searchFragment_to_detailsFragment)
+            }
+        })
+        binding.searchRecyclerView.setHasFixedSize(true)
+        binding.searchRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.searchRecyclerView.adapter = adapter
     }
 }

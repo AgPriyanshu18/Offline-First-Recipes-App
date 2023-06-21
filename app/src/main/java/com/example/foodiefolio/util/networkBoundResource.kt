@@ -23,7 +23,6 @@ inline fun <ResultType, RequestType> networkBoundResource(
 
     // get one list of product from database
     val data = query().first()
-    Log.e("networkBoundResource","should fetch se bahar + data.toString()")
     //if its time to update cache if data is decent or not
     val flow = if (shouldFetch(data)) {
 
@@ -32,16 +31,21 @@ inline fun <ResultType, RequestType> networkBoundResource(
 
         val fetchedResult = fetch()
 
-        Log.e("networkBoundResource",data.toString())
+        Log.e("networkBoundResource",fetchedResult.toString())
         // if data is not same as api data
         if (data != fetchedResult) {
             try {
                 // save new data to database
                 saveFetchResult(fetchedResult)
+                Log.e("networkBoundResource pass",fetchedResult.toString())
 
                 // new data from api
-                query().map { Resource.Success(it) }
+                query().map {
+                    Log.e("networkBoundResource success",it.toString())
+                    Resource.Success(it)
+                }
             } catch (t: Throwable) {
+                Log.e("networkBoundResource failed",t.toString())
 
 
                 // handle error
