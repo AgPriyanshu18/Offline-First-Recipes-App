@@ -37,6 +37,10 @@ class DetailsFragment : Fragment() {
             }
         }
 
+        binding.backButton.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+
         setObservers()
 
 

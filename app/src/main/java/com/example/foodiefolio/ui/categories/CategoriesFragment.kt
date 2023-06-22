@@ -42,6 +42,10 @@ class CategoriesFragment : Fragment() {
             Navigation.findNavController(requireView()).navigate(R.id.action_categoriesFragment_to_randomFragment)
         }
 
+        binding.favourite.setOnClickListener {
+            Navigation.findNavController(requireView()).navigate(R.id.action_categoriesFragment_to_favFragment)
+        }
+
         return binding.root
     }
 
