@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.foodiefolio.R
@@ -111,6 +112,7 @@ class DetailsFragment : Fragment() {
                     Img = meal.Img
                 )
             )
+            Toast.makeText(requireContext(), "Recipe added to favrouite", Toast.LENGTH_SHORT).show()
         }
     }
 

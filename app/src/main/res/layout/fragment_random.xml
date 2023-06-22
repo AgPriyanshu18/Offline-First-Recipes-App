@@ -32,11 +32,6 @@
             android:layout_height="64dp"
             android:layout_weight="1" />
 
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="64dp"
-            android:src="@drawable/heart_empty_64" />
-
 
     </LinearLayout>
 
@@ -90,7 +85,6 @@
                 android:text="Category"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="italic"
                 app:layout_constraintEnd_toStartOf="@+id/recipe_img"
                 app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
@@ -100,12 +94,10 @@
                 android:id="@+id/recipe_cat_ans"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:paddingStart="20dp"
                 android:text="Category"
                 android:textColor="#88000000"
                 android:textSize="20dp"
-                android:textStyle="italic"
                 app:layout_constraintEnd_toStartOf="@+id/recipe_img"
                 app:layout_constraintHorizontal_bias="0.842"
                 app:layout_constraintStart_toStartOf="parent"
@@ -120,7 +112,6 @@
                 android:text="Area"
                 android:textColor="@color/black"
                 android:textSize="20dp"
-                android:textStyle="italic"
                 app:layout_constraintEnd_toStartOf="@+id/recipe_img"
                 app:layout_constraintHorizontal_bias="0.168"
                 app:layout_constraintStart_toStartOf="parent"
@@ -130,12 +121,10 @@
                 android:id="@+id/recipe_area_ans"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:paddingStart="20dp"
                 android:text="Area"
                 android:textColor="#88000000"
                 android:textSize="20dp"
-                android:textStyle="italic"
                 app:layout_constraintEnd_toStartOf="@+id/recipe_img"
                 app:layout_constraintHorizontal_bias="0.803"
                 app:layout_constraintStart_toStartOf="parent"
@@ -175,8 +164,7 @@
                     android:paddingStart="30dp"
                     android:text="Ing1"
                     android:textColor="#88000000"
-                    android:textSize="25sp"
-                    android:textStyle="italic" />
+                    android:textSize="20sp"/>
 
                 <View
                     android:layout_width="0dp"
@@ -192,8 +180,7 @@
                     android:paddingStart="30dp"
                     android:text="Ms1"
                     android:textColor="#88000000"
-                    android:textSize="25sp"
-                    android:textStyle="italic" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -215,8 +202,7 @@
                     android:paddingStart="30dp"
                     android:text="Ing2"
                     android:textColor="#88000000"
-                    android:textSize="25sp"
-                    android:textStyle="italic" />
+                    android:textSize="20sp" />
 
                 <View
                     android:layout_width="0dp"
@@ -232,8 +218,7 @@
                     android:paddingStart="30dp"
                     android:text="Ms2"
                     android:textColor="#88000000"
-                    android:textSize="25sp"
-                    android:textStyle="italic" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -255,8 +240,7 @@
                     android:paddingStart="30dp"
                     android:text="Ing3"
                     android:textColor="#88000000"
-                    android:textSize="25sp"
-                    android:textStyle="italic" />
+                    android:textSize="20sp" />
 
                 <View
                     android:layout_width="0dp"
@@ -272,8 +256,7 @@
                     android:paddingStart="30dp"
                     android:text="Ms3"
                     android:textColor="#88000000"
-                    android:textSize="25sp"
-                    android:textStyle="italic" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -295,8 +278,7 @@
                     android:paddingStart="30dp"
                     android:text="Ing4"
                     android:textColor="#88000000"
-                    android:textSize="25sp"
-                    android:textStyle="italic" />
+                    android:textSize="20sp" />
 
                 <View
                     android:layout_width="0dp"
@@ -312,8 +294,7 @@
                     android:paddingStart="30dp"
                     android:text="Ms4"
                     android:textColor="#88000000"
-                    android:textSize="25sp"
-                    android:textStyle="italic" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -335,8 +316,7 @@
                     android:paddingStart="30dp"
                     android:text="Ing5"
                     android:textColor="#88000000"
-                    android:textSize="25sp"
-                    android:textStyle="italic" />
+                    android:textSize="20sp" />
 
                 <View
                     android:layout_width="0dp"
@@ -352,8 +332,7 @@
                     android:paddingStart="30dp"
                     android:text="Ms5"
                     android:textColor="#88000000"
-                    android:textSize="25sp"
-                    android:textStyle="italic" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -379,8 +358,7 @@
                 android:paddingStart="20dp"
                 android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
                 android:textColor="#88000000"
-                android:textSize="25dp"
-                android:textStyle="italic"
+                android:textSize="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recipe_prep"/>

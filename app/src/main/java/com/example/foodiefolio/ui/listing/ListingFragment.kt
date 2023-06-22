@@ -49,36 +49,42 @@ class ListingFragment : Fragment() {
     private fun setObservers() {
         binding.apply {
             viewModel.recipe.observe(viewLifecycleOwner) { result ->
-                if(result.data != null){
+                if (result.data != null) {
+                    binding.listRecyclerView.visibility = View.VISIBLE
                     setUpRecyclerView(result.data)
-                }
-                when (result) {
-                    is Resource.Success -> {
-                        binding.listProgressBar.visibility = View.GONE
-                        binding.errorMessage.visibility = View.GONE
-                    }
-                    is Resource.Error -> {
-                        binding.listProgressBar.visibility = View.GONE
-                        binding.errorMessage.visibility = View.VISIBLE
-                    }
-                    is Resource.Loading -> {
-                        binding.listProgressBar.visibility = View.VISIBLE
-                    }
+                } else
+                    when (result) {
+                        is Resource.Success -> {
+                            binding.listProgressBar.visibility = View.GONE
+                            binding.errorMessage.visibility = View.GONE
+                        }
 
-                    else -> {}
-                }
+                        is Resource.Error -> {
+                            binding.listRecyclerView.visibility = View.GONE
+                            binding.listProgressBar.visibility = View.GONE
+                            binding.errorMessage.visibility = View.VISIBLE
+                        }
+
+                        is Resource.Loading -> {
+                            binding.listRecyclerView.visibility = View.GONE
+                            binding.listProgressBar.visibility = View.VISIBLE
+                        }
+
+                        else -> {}
+                    }
             }
         }
     }
 
     private fun setUpRecyclerView(meals: List<Meals>) {
-        adapter = ListingAdapter(meals,object : ListingAdapter.onClickListener {
+        adapter = ListingAdapter(meals, object : ListingAdapter.onClickListener {
             override fun onClick(recipe: Meals) {
                 val bundle = Bundle()
                 bundle.putString(AppConstants.MEAL_ID, recipe.id)
                 parentFragmentManager.setFragmentResult(AppConstants.MEAL_DATA, bundle)
                 val k = parentFragmentManager.findFragmentById(R.id.fragmentView)
-                Navigation.findNavController(k!!.requireView()).navigate(R.id.action_listingFragment_to_detailsFragment)
+                Navigation.findNavController(k!!.requireView())
+                    .navigate(R.id.action_listingFragment_to_detailsFragment)
             }
         })
         binding.listRecyclerView.layoutManager = LinearLayoutManager(requireContext())

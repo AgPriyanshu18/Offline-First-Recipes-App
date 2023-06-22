@@ -10,10 +10,10 @@
     android:gravity="center_vertical"
     app:cardCornerRadius="15dp"
     app:cardElevation="10dp"
+    android:backgroundTint="#D0F3B1"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.01999998">
+    app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
@@ -21,11 +21,12 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/recipe_Image"
-            android:layout_width="130dp"
+            android:layout_width="160dp"
             android:layout_height="120dp"
             android:backgroundTint="@color/black"
             android:foreground="@drawable/image_back"
             android:src="@drawable/food"
+            android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -38,11 +39,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Anime Food"
-            android:textColor="#616060"
+            android:textColor="#B0000000"
             android:textStyle="bold"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.296"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />

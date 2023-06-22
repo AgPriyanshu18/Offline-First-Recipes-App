@@ -28,7 +28,6 @@ class SearchFragment : Fragment() {
     lateinit var binding: FragmentSearchBinding
     private val viewModel by viewModels<SearchViewModel>()
     lateinit var adapter: SearchAdapter
-    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,7 +83,6 @@ class SearchFragment : Fragment() {
     private fun setUpRecyclerView(result: List<Meals>) {
         adapter = SearchAdapter(result, object : SearchAdapter.onClickListener {
             override fun onClick(meal: Meals) {
-                Toast.makeText(requireContext(), meal.toString(), Toast.LENGTH_SHORT).show()
                 val bundle = Bundle()
                 bundle.putString(AppConstants.MEAL_ID, meal.id)
                 parentFragmentManager.setFragmentResult(AppConstants.MEAL_DATA, bundle)
