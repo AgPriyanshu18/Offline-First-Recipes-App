@@ -21,7 +21,7 @@ interface MealDao {
     fun getMealDetails(id: Int): Flow<MealDetails>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertMealDetails(meal: MealDetails)
+    suspend fun insertMealDetails(mealDetails: MealDetails)
 
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

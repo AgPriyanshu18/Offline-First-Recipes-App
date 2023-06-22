@@ -55,7 +55,8 @@ class MealRepositoryImpl(
         },
         saveFetchResult = { mealDetails ->
             db.withTransaction {
-                dao.insertMealDetails(mealDetails.meals[0])
+                Log.e(TAG, "getMealDetails: ${mealDetails?.meals?.get(0)}")
+                mealDetails.meals[0].let { dao.insertMealDetails(it) }
             }
         }
     )

@@ -19,8 +19,6 @@ data class MealDetails(
     val area: String,
     @SerializedName("strInstructions")
     val instructions: String,
-    @SerializedName("strTags")
-    val tags: String,
     @SerializedName("strYoutube")
     val youtube: String,
     @SerializedName("strIngredient1")
@@ -33,6 +31,14 @@ data class MealDetails(
     val ingredient4: String,
     @SerializedName("strIngredient5")
     val ingredient5: String,
-
-    val fav: String
+    @SerializedName("strMeasure1")
+    val measure1: String,
+    @SerializedName("strMeasure2")
+    val measure2: String,
+    @SerializedName("strMeasure3")
+    val measure3: String,
+    @SerializedName("strMeasure4")
+    val measure4: String,
+    @SerializedName("strMeasure5")
+    val measure5: String,
 )

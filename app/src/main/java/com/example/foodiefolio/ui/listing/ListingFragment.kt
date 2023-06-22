@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.foodiefolio.R
 import com.example.foodiefolio.data.model.Category
 import com.example.foodiefolio.data.model.Meals
 import com.example.foodiefolio.databinding.FragmentListingBinding
@@ -68,7 +70,11 @@ class ListingFragment : Fragment() {
     private fun setUpRecyclerView(meals: List<Meals>) {
         adapter = ListingAdapter(meals,object : ListingAdapter.onClickListener {
             override fun onClick(recipe: Meals) {
-                Toast.makeText(requireContext(), recipe.toString(), Toast.LENGTH_SHORT).show()
+                val bundle = Bundle()
+                bundle.putString(AppConstants.MEAL_ID, recipe.id)
+                parentFragmentManager.setFragmentResult(AppConstants.MEAL_DATA, bundle)
+                val k = parentFragmentManager.findFragmentById(R.id.fragmentView)
+                Navigation.findNavController(k!!.requireView()).navigate(R.id.action_searchFragment_to_detailsFragment)
             }
         })
         binding.listRecyclerView.layoutManager = LinearLayoutManager(requireContext())
