@@ -5,6 +5,7 @@ import androidx.room.withTransaction
 import com.example.foodiefolio.data.api.FoodieAPI
 import com.example.foodiefolio.data.database.MealDatabase
 import com.example.foodiefolio.data.model.Category
+import com.example.foodiefolio.data.model.Favourite
 import com.example.foodiefolio.data.model.MealDetails
 import com.example.foodiefolio.data.model.Meals
 import com.example.foodiefolio.util.Resource
@@ -12,6 +13,7 @@ import com.example.foodiefolio.util.networkBoundResource
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import java.lang.Exception
 
 class MealRepositoryImpl(
@@ -51,12 +53,20 @@ class MealRepositoryImpl(
         },
         fetch = {
             delay(500)
-            api.getMealByID(id)
+            try{
+                val p = api.getMealByID(id)
+                p
+            }catch (e  :Exception){
+                e.printStackTrace()
+                null
+            }
         },
         saveFetchResult = { mealDetails ->
             db.withTransaction {
                 Log.e(TAG, "getMealDetails: ${mealDetails?.meals?.get(0)}")
-                mealDetails.meals[0].let { dao.insertMealDetails(it) }
+                if (mealDetails != null) {
+                    mealDetails.meals[0].let { dao.insertMealDetails(it) }
+                }
             }
         }
     )
@@ -98,6 +108,40 @@ class MealRepositoryImpl(
                 emit(Resource.Error(Throwable(e.message.toString())))
                 e.printStackTrace()
             }
+        }
+    }
+
+    override fun getRandom(): Flow<Resource<MealDetails>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val response = api.getRandom()
+                if (response.meals.isNotEmpty()) {
+                    emit(Resource.Success(response.meals[0]))
+                }
+            } catch (e: Exception) {
+                emit(Resource.Error(Throwable(e.message.toString())))
+                e.printStackTrace()
+            }
+        }
+    }
+
+    override fun getFav(): Flow<Resource<List<Favourite>>> {
+
+        return dao.getFav().map {
+            Resource.Success(it)
+        }
+    }
+
+    override suspend fun insertfav(favmeal: Favourite) {
+        db.withTransaction {
+            dao.insertfav(favmeal)
+        }
+    }
+
+    override suspend fun deleteFav(id: Int) {
+        db.withTransaction {
+            dao.deleteFav(id)
         }
     }
 

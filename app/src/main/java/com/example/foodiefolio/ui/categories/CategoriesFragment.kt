@@ -38,6 +38,10 @@ class CategoriesFragment : Fragment() {
             Navigation.findNavController(requireView()).navigate(R.id.action_categoriesFragment_to_searchFragment)
         }
 
+        binding.random.setOnClickListener {
+            Navigation.findNavController(requireView()).navigate(R.id.action_categoriesFragment_to_randomFragment)
+        }
+
         return binding.root
     }
 

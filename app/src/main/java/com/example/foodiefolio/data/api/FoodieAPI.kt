@@ -20,7 +20,7 @@ interface FoodieAPI {
     suspend fun getCategories(): categoryResponse
 
     @GET("random.php")
-    suspend fun getRandom(): List<MealDetails>
+    suspend fun getRandom(): MealDetailResponse
 
     @GET("lookup.php")
     suspend fun getMealByID(@Query("i") id: String): MealDetailResponse

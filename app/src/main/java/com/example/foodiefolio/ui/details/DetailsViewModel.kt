@@ -5,10 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
+import com.example.foodiefolio.data.model.Favourite
 import com.example.foodiefolio.data.model.MealDetails
 import com.example.foodiefolio.data.repository.MealRepository
 import com.example.foodiefolio.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,5 +28,11 @@ class DetailsViewModel @Inject constructor(
 
     fun getData(it : String){
         mealDetailData.value = it
+    }
+
+    fun setFav(fav : Favourite){
+        viewModelScope.launch {
+            repo.insertfav(fav)
+        }
     }
 }

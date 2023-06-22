@@ -74,7 +74,7 @@ class ListingFragment : Fragment() {
                 bundle.putString(AppConstants.MEAL_ID, recipe.id)
                 parentFragmentManager.setFragmentResult(AppConstants.MEAL_DATA, bundle)
                 val k = parentFragmentManager.findFragmentById(R.id.fragmentView)
-                Navigation.findNavController(k!!.requireView()).navigate(R.id.action_searchFragment_to_detailsFragment)
+                Navigation.findNavController(k!!.requireView()).navigate(R.id.action_listingFragment_to_detailsFragment)
             }
         })
         binding.listRecyclerView.layoutManager = LinearLayoutManager(requireContext())

@@ -16,9 +16,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.01999998">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="#27000000">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/recipe_image"
@@ -34,16 +36,15 @@
 
         <TextView
             android:id="@+id/recipe_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Anime Food"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/recipe_image"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:text="Anime Food"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:layout_margin="20dp"
+            android:textStyle="bold"/>
+    </LinearLayout>
     
 </androidx.cardview.widget.CardView>
     

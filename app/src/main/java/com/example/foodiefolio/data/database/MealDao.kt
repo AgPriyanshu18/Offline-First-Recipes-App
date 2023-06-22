@@ -2,6 +2,7 @@ package com.example.foodiefolio.data.database
 
 import androidx.room.*
 import com.example.foodiefolio.data.model.Category
+import com.example.foodiefolio.data.model.Favourite
 import com.example.foodiefolio.data.model.MealDetails
 import com.example.foodiefolio.data.model.Meals
 import com.example.foodiefolio.util.Resource
@@ -29,5 +30,14 @@ interface MealDao {
 
     @Query("SELECT * FROM meals WHERE category = :cat")
     fun getMeal(cat : String): Flow<List<Meals>>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertfav(favmeal : Favourite)
+
+    @Query("SELECT * FROM favrouite")
+    fun getFav(): Flow<List<Favourite>>
+
+    @Query("DELETE FROM favrouite WHERE id = :id")
+    fun deleteFav(id : Int)
 
 }

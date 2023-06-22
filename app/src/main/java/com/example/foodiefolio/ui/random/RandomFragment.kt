@@ -1,60 +1,86 @@
 package com.example.foodiefolio.ui.random
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.foodiefolio.R
+import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.example.foodiefolio.data.model.MealDetails
+import com.example.foodiefolio.databinding.FragmentRandomBinding
+import com.example.foodiefolio.util.Resource
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RandomFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class RandomFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    lateinit var binding: FragmentRandomBinding
+    private val viewModel by viewModels<RandomViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_random, container, false)
+    ): View {
+        binding = FragmentRandomBinding.inflate(layoutInflater)
+
+        setObservers()
+
+        viewModel.getData()
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RandomFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RandomFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun setObservers() {
+        binding.apply {
+            viewModel.recipe.observe(viewLifecycleOwner) { result ->
+                if(result.data != null){
+                    binding.compView.visibility = View.VISIBLE
+                    updateUI(result.data)
+                }
+                when (result) {
+                    is Resource.Success -> {
+                        binding.detailProgressBar.visibility = View.GONE
+                        binding.detailsErrorMessage.visibility = View.GONE
+                    }
+                    is Resource.Error -> {
+                        binding.detailProgressBar.visibility = View.GONE
+                        binding.detailsErrorMessage.visibility = View.VISIBLE
+                    }
+                    is Resource.Loading -> {
+                        binding.detailProgressBar.visibility = View.VISIBLE
+                        binding.detailsErrorMessage.visibility = View.GONE
+                    }
+
+                    else -> {}
                 }
             }
+        }
     }
+
+    private fun updateUI(meal: MealDetails) {
+        Log.e("Random Fragment", meal.toString())
+        binding.recipeName.text = meal.name
+        binding.recipeCatAns.text = meal.category
+        binding.recipeAreaAns.text = meal.area
+        Glide.with(requireContext())
+            .load(meal.Img)
+            .circleCrop().
+            into(binding.recipeImg)
+
+        binding.Ing1.text = meal.ingredient1
+        binding.Ing2.text = meal.ingredient2
+        binding.Ing3.text = meal.ingredient3
+        binding.Ing4.text = meal.ingredient4
+        binding.Ing5.text = meal.ingredient5
+        binding.Ms1.text = meal.measure1
+        binding.Ms2.text = meal.measure2
+        binding.Ms3.text = meal.measure3
+        binding.Ms4.text = meal.measure4
+        binding.Ms5.text = meal.measure5
+
+        binding.recipePrepSteps.text = meal.instructions
+    }
+
 }

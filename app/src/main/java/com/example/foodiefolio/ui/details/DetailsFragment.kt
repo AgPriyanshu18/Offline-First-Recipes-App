@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.foodiefolio.R
 import com.example.foodiefolio.data.model.Category
+import com.example.foodiefolio.data.model.Favourite
 import com.example.foodiefolio.data.model.MealDetails
 import com.example.foodiefolio.data.model.Meals
 import com.example.foodiefolio.databinding.FragmentDetailsBinding
@@ -37,6 +38,8 @@ class DetailsFragment : Fragment() {
         }
 
         setObservers()
+
+
 
         return binding.root
     }
@@ -91,6 +94,20 @@ class DetailsFragment : Fragment() {
         binding.Ms5.text = meal.measure5
 
         binding.recipePrepSteps.text = meal.instructions
+
+        setButton(meal)
+    }
+
+    private fun setButton(meal: MealDetails) {
+        binding.likedStatus.setOnClickListener {
+            viewModel.setFav(
+                Favourite(
+                    id = meal.id,
+                    name = meal.name,
+                    Img = meal.Img
+                )
+            )
+        }
     }
 
 }
