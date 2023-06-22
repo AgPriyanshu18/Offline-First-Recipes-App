@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navgraph"
-    app:startDestination="@id/categoriesFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/categoriesFragment"
@@ -64,5 +64,9 @@
         android:id="@+id/splashFragment"
         android:name="com.example.foodiefolio.ui.splash.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" />
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+    </fragment>
 </navigation>

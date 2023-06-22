@@ -40,6 +40,10 @@ class SearchFragment : Fragment() {
 
         startSearching()
 
+        binding.backButton.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+
         return binding.root
     }
 

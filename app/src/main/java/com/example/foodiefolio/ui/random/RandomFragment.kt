@@ -29,6 +29,10 @@ class RandomFragment : Fragment() {
 
         viewModel.getData()
 
+        binding.backButton.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+
         return binding.root
     }
 

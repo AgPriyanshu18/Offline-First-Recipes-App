@@ -38,6 +38,10 @@ class ListingFragment : Fragment() {
 
         setObservers()
 
+        binding.backButton.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+
 
         return binding.root
     }
